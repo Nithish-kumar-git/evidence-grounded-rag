@@ -1,0 +1,49 @@
+# Local environments and dependencies
+.venv/
+.venv-*/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# Generated frontend/build/cache output
+dist/
+rag-demo-dist/
+.vite/
+coverage/
+*.tsbuildinfo
+# Never commit local credentials or handoff material
+.env
+.env.*
+*.pem
+*.key
+.pgpass
+pgpass.conf
+.npmrc
+# Local databases and common dump/backup artifacts (schema.sql remains source)
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.backup
+*.dump.sql
+*.backup.sql
+*.sql.gz
+*.sql.zip
+# Generated diagnostics, evaluation runs and temporary files
+.verification/
+evaluation-results/
+evaluation-artifacts/
+rag_demo/evaluation/results/
+rag_demo/evaluation/artifacts/
+*.log
+*.tmp
+*.patch
+*.orig
+*.rej
+.DS_Store
+Thumbs.db

@@ -1,0 +1,26 @@
+{
+  "name": "evidence-grounded-rag-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone synthetic-document RAG local demo UI",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "vite --config vite.rag.config.js",
+    "build": "node ../rag_demo/build_frontends.mjs",
+    "preview": "vite preview --config vite.rag.config.js",
+    "test": "node --jitless --experimental-vm-modules --test tests/ragDemo.test.mjs",
+    "check": "node --check vite.rag.config.js && node --check src/ragDemo/client.js && node --check tests/ragDemo.test.mjs && node --check ../rag_demo/build_frontends.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.7.0",
+    "esbuild": "0.25.12",
+    "vite": "6.4.4"
+  }
+}
