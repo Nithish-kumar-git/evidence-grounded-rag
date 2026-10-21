@@ -4,6 +4,47 @@ Prepared October 16, 2026. This document describes the standalone local reposito
 Read this and `rag_demo/README.md` before resuming. It is not production sign-off or
 a complete security certification.
 
+## 21 October 2026 closeout snapshot
+
+This snapshot supersedes the historical no-remote/publication statements below;
+the provenance record remains intact.
+
+| Item | Verified value |
+|---|---|
+| Repository | <https://github.com/Nithish-kumar-git/evidence-grounded-rag> |
+| Authoritative checkout for this closeout | `C:\Users\itsni\OneDrive\Documents\ChatGPT\project collections\evidence-grounded-rag` |
+| Default / active branch | `main` / `main` |
+| Documentation base commit | `3997dea5705a9ae24560c3a82d1d3581608fee2f` |
+| Base synchronization | Local `main` matched `origin/main`; zero ahead and zero behind |
+| Base working tree | Clean; no modified or untracked user work |
+| Public deployment | None; no deployment configuration is tracked |
+
+The documentation commit containing this snapshot cannot embed its own hash. Use
+`git log -1 --format=%H -- docs/RAG_PROJECT_HANDOFF.md` after commit and compare the
+remote with `git ls-remote origin refs/heads/main`.
+
+Current stack and assumptions: Python 3.12+, FastAPI, PostgreSQL 16 with pgvector,
+Gemini embeddings/generation, React 18 and Vite 6; Node.js 22+; local loopback UI
+and API on Windows are the documented demonstration path. Configuration names are
+`RAG_DEMO_ENABLED`, `RAG_DATABASE_URL`, `RAG_GEMINI_API_KEY`,
+`RAG_EMBEDDING_MODEL`, `RAG_EMBEDDING_DIMENSIONS`, `RAG_ANSWER_MODEL`,
+`RAG_CHUNK_SIZE` and `RAG_CHUNK_OVERLAP`; never publish their values.
+
+Setup, run and focused verification commands remain the ones documented in the
+sections below. The 77 backend tests, six JSON checks, 10 frontend tests and build
+are recorded historical candidate results, not checks rerun for this documentation
+closeout. Mock evaluation is lexical/test-only. Historical live Gemini/pgvector
+results are not a fresh rehearsal, and literal quote/citation integrity does not
+establish that every generated claim is semantically entailed by its evidence.
+
+Remaining blocker: perform one approved end-to-end rehearsal with the patched
+environment, dedicated local pgvector database, live Gemini access, synthetic
+documents, browser citation inspection and owner-scoped cleanup. Provider calls,
+database access, credential entry, resource mutation and any hosted deployment
+require explicit approval. Until that rehearsal is completed, the source can be
+frozen as a documented local demo, but live integration remains **awaiting
+verification**.
+
 ## Current status and provenance
 
 - Standalone repository: `evidence-grounded-rag`, branch `main`; use your checkout
@@ -43,7 +84,9 @@ Source project (provenance only): Family Finance Tracker, `main`, source HEAD
 unrelated untracked entries are protected. Do not import or change them. Source
 HEAD, branch, index, refs, remotes/config, status and 189 inventoried file hashes
 were checked unchanged during extraction. No fetch, pull, push or branch switch
-was used. This new repository has no configured remote.
+was used during that extraction. At that time the new repository had no remote;
+the current published repository and synchronized `main` state are recorded in the
+closeout snapshot above.
 
 ## Architecture and entry points
 

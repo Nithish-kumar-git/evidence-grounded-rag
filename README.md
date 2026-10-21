@@ -5,9 +5,9 @@ and inspecting the retrieved evidence. React + FastAPI + PostgreSQL/pgvector +
 Gemini. The API validates cited sources and exact quote substrings and can abstain
 when evidence is insufficient. This does not establish semantic correctness.
 
-This repository was extracted from three approved RAG commits without the Finance
-Tracker application or its history. It is for supervised local demonstrations,
-not production use. No deployment configuration or public deployment is included.
+This repository was extracted from approved RAG work without the Finance Tracker
+application or its history. It is for supervised local demonstrations, not
+production use. No deployment configuration or public deployment is included.
 
 ## Install and check
 
@@ -85,8 +85,11 @@ additional JSON checks, 10 frontend tests and the production build; its isolated
 21-package candidate audit had zero findings. These results apply to the candidate,
 not the preserved `.venv`, and provide no fresh live Gemini/pgvector/browser proof.
 
-No GitHub remote is configured; no GitHub publication or deployment has occurred.
-Review the recorded security and integration limitations before any public release.
+The source is published at
+<https://github.com/Nithish-kumar-git/evidence-grounded-rag>; `main` was verified
+at `3997dea5705a9ae24560c3a82d1d3581608fee2f` for this documentation closeout.
+There is still no public application deployment. Review the recorded security and
+integration limitations before any hosted release.
 
 ## License
 
