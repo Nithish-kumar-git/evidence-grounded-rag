@@ -86,8 +86,10 @@ additional JSON checks, 10 frontend tests and the production build; its isolated
 not the preserved `.venv`, and provide no fresh live Gemini/pgvector/browser proof.
 
 The source is published at
-<https://github.com/Nithish-kumar-git/evidence-grounded-rag>; `main` was verified
-at `3997dea5705a9ae24560c3a82d1d3581608fee2f` for this documentation closeout.
+<https://github.com/Nithish-kumar-git/evidence-grounded-rag>. The documentation
+closeout started from remote `main` at
+`3997dea5705a9ae24560c3a82d1d3581608fee2f`; use `git log -1` for the containing
+documentation commit.
 There is still no public application deployment. Review the recorded security and
 integration limitations before any hosted release.
 
