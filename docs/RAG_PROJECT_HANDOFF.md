@@ -4,6 +4,81 @@ Prepared October 16, 2026. This document describes the standalone local reposito
 Read this and `rag_demo/README.md` before resuming. It is not production sign-off or
 a complete security certification.
 
+## 22 October 2026 isolated-environment restoration attempt
+
+This bounded task started from clean, synchronized published `main` at
+`4d3ea8a0a9a4c69a645536a912fac7debb797033`. The original development checkout's
+pre-existing handoff modification and the original publication checkout were left
+untouched. No database, volume, network, schema, credential, dependency or
+deployment was changed.
+
+### Docker and service result
+
+- The Docker CLI is installed and the selected context is `desktop-linux`.
+- Docker Desktop/backend processes were running, but the daemon did not answer a
+  bounded version request. The named container, volume and network therefore could
+  not be authoritatively enumerated; their status is **UNVERIFIED**, not assumed
+  missing.
+- Nothing was listening on local port 5544. The RAG API/UI ports 8001/5174 also
+  remained unused from the preceding readiness check.
+- The repository contains no Compose file, Dockerfile, environment example or
+  provisioning script for `fft-rag-demo-local`. It records only the historical
+  container/image/volume/network names and the one-time database schema.
+
+Restoration was not attempted. Starting a known stopped container would be safe
+only after the daemon responds and returns that exact existing container. Recreating
+one from the historical image reference would require inventing omitted role,
+password, database, resource-limit and ownership configuration, so it is explicitly
+out of scope. No `docker run`, Compose, schema bootstrap, volume deletion, prune,
+reset or substitute database was used.
+
+The intended isolation boundary remains the documented loopback-only service at
+`127.0.0.1:5544`, database `fft_rag_demo`, schema `rag_demo`, application role
+`rag_app`, and dedicated volume/network. Because no database connection was made,
+current database identity, schema ownership, contract row, grants, RLS and absence
+of unrelated data were not re-verified.
+
+### Exact-record cleanup assessment
+
+The committed live evaluator is not yet safe for this milestone's complete cleanup
+requirement. It generates random usernames internally, but `account()` returns only
+the bearer header; the exact owner UUID returned by `repository.create_account()`
+is discarded by the registration route. It tracks uploaded document UUIDs, deletes
+only the first document, revokes sessions through logout, and cannot delete account
+rows because `rag_app` deliberately lacks that privilege. A live run would retain
+two accounts and five documents.
+
+Smallest safe improvement design:
+
+1. Extend the evaluator's existing `RecordingRepository` wrapper to intercept
+   `create_account()` and retain each exact returned owner UUID in memory without
+   printing it or changing the public registration response.
+2. In the evaluator's controlled cleanup phase, delete every tracked document UUID
+   through its owning authenticated session and verify each is unavailable; then
+   revoke both exact sessions.
+3. Add a separate, privately supplied bootstrap cleanup connection validated to
+   the same loopback host, port and `fft_rag_demo` database. In one transaction,
+   delete sessions and accounts only where `owner_id`/`id` equals the nonempty set
+   of captured UUIDs. Refuse empty sets, username-prefix deletes, unbounded SQL and
+   any non-loopback destination.
+4. Require deleted row counts to match the captured UUID set and verify only those
+   IDs are absent while the single embedding-contract row remains. Any cleanup
+   failure makes the evaluation fail and must preserve the exact IDs privately for
+   reviewed recovery; it must never broaden the deletion predicate.
+5. Add offline regression tests proving pre-existing accounts/documents survive,
+   exact generated IDs are removed, empty-ID cleanup refuses to run, and cleanup
+   failure cannot be reported as success.
+
+This is a design record, not an implemented or tested cleanup feature. Do not run
+the live evaluator until the Docker daemon exposes the exact existing service and
+this exact-ID cleanup path is implemented and reviewed. A separate RAG-only Gemini
+credential is still required privately; none was accessed or requested here.
+
+**Single next action:** restore Docker daemon responsiveness and confirm that it
+returns the existing `fft-rag-demo-local` container. If it does not exist, stop and
+recover its original private configuration rather than recreating it from the
+incomplete repository history.
+
 ## 22 October 2026 live-integration verification attempt
 
 This bounded attempt started from published remote `main` at
