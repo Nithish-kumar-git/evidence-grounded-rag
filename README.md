@@ -36,6 +36,13 @@ only `frontend/dist/rag-demo.html` and assets; generated output is ignored. Back
 and frontend dependencies install only in this repository. Python top-level pins
 are preserved; Python transitive dependencies are not fully locked.
 
+**Live integration status (22 October 2026):** a fresh real-pipeline run was
+blocked before any write because the dedicated loopback pgvector service was not
+available and no RAG database or Gemini configuration was present in the checking
+process. Gemini, pgvector ingestion/retrieval, citations, abstention and isolation
+were therefore not re-verified. No mock result is presented as live evidence; see
+the handoff for the exact environment findings and cleanup prerequisite.
+
 ## Run locally
 
 First confirm the existing dedicated RAG database is available; it is not created

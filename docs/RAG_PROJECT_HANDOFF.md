@@ -4,6 +4,69 @@ Prepared October 16, 2026. This document describes the standalone local reposito
 Read this and `rag_demo/README.md` before resuming. It is not production sign-off or
 a complete security certification.
 
+## 22 October 2026 live-integration verification attempt
+
+This bounded attempt started from published remote `main` at
+`7d0bdbf78d2f9b1629fc6687ff8ead32552aa5d1`. It performed state and runtime
+readiness inspection only. No database connection, SQL, provider request, upload,
+account creation, application-table read, schema change, deployment or dependency
+installation occurred.
+
+### Checkout and dependency state
+
+- Development checkout: `main` at
+  `804a268b721d6cb42e71461c2d175db4889162da`, no remote configured, with its
+  pre-existing modification to `docs/RAG_PROJECT_HANDOFF.md` preserved.
+- Publication checkout: clean `main` at `3997dea5705a9ae24560c3a82d1d3581608fee2f`,
+  two commits behind remote after fetch. It was not pulled or modified. A separate
+  clean clone of current remote `main` was used for this documentation update.
+- Declarations remain FastAPI 0.133.0, Starlette 1.3.1, Uvicorn 0.34.3,
+  HTTPX 0.28.1, psycopg 3.2.9 and pypdf 6.20.1. The preserved development `.venv`
+  still contains FastAPI 0.116.1 / Starlette 0.47.2; the ignored Phase 7 candidate
+  remains available with FastAPI 0.133.0 / Starlette 1.3.1. Neither was changed.
+
+### Live readiness and result
+
+The current source and one-time schema still agree on
+`gemini-embedding-001` at exactly 768 dimensions, with separate document/query
+task types and a stored `embedding_contract`. This is static configuration
+agreement, not a fresh embedding result.
+
+No `RAG_*` process variables or repository `.env*` files were available. No
+listeners were present on the documented database/API/UI ports 5544, 8001 or 5174.
+Both running- and all-container listings returned no container named
+`fft-rag-demo-local`. Consequently the required isolated pgvector database was not
+available, and the separate Gemini credential was not available through a safe
+non-secret mechanism.
+
+The committed live evaluator also retains two generated accounts and five of six
+uploaded documents. `rag_app` cannot delete accounts, while the exact-account
+bootstrap cleanup credential/tool is intentionally not shipped. Running it without
+that reviewed cleanup path would violate this milestone's cleanup requirement.
+
+Therefore the genuine pipeline was **not executed**:
+
+| Required evidence | 22 October result |
+|---|---|
+| Gemini document/query embeddings and answer generation | Blocked; no provider request made |
+| PostgreSQL/pgvector storage and retrieval | Blocked; dedicated loopback service unavailable |
+| Ingestion, distractor retrieval and 768-dimensional stored vectors | Not run |
+| Citation integrity and semantic support inspection | Not run; historical lexical/overlap metrics were not reused as semantic proof |
+| Unsupported-question abstention | Not run |
+| Two-identity isolation | Not run |
+| Cleanup | No fixtures were created, so no cleanup was required |
+
+No offline suite was repeated because application code did not change and mocked
+checks cannot satisfy this live milestone. Documentation consistency, Markdown
+references and the final diff were checked separately.
+
+**Exact blocker:** the isolated pgvector service, a privately supplied RAG-only
+Gemini key, and a reviewed exact-account cleanup mechanism were not simultaneously
+available. **Single smallest next action:** restore the named dedicated local
+pgvector container on `127.0.0.1:5544`; before running the evaluator, also confirm
+the private bootstrap cleanup path for its exact generated account IDs. Do not
+substitute a shared/production database.
+
 ## 21 October 2026 closeout snapshot
 
 This snapshot supersedes the historical no-remote/publication statements below;
