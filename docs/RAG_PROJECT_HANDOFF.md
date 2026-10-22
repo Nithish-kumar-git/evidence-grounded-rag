@@ -4,6 +4,48 @@ Prepared October 16, 2026. This document describes the standalone local reposito
 Read this and `rag_demo/README.md` before resuming. It is not production sign-off or
 a complete security certification.
 
+## 22 October 2026 Docker recovery-only follow-up
+
+This bounded follow-up started from clean, synchronized `main` at
+`3a561ceb4a0780ea17b358e852c4a61f63e0b1a6`. The active Docker context remained
+`desktop-linux`, Docker Desktop 4.60.1 and its backend processes were present, but
+the daemon did not answer. The `docker-desktop` WSL distribution was stopped and
+nothing was listening on `127.0.0.1:5544`.
+
+Docker's host log provides the exact failure that was previously unknown. During
+backend service initialization, the optional inference manager attempts to replace
+the local runtime socket at
+`%LOCALAPPDATA%\Docker\run\dockerInference`. Windows returns error 1920, "The file
+cannot be accessed by the system," and Docker then stops every local engine,
+including `linux/wsl`. The socket path is a zero-byte reparse point; its metadata,
+ACL and reparse tag cannot be read even while Docker Desktop is stopped.
+
+Only bounded recovery steps were attempted:
+
+- Docker Desktop was stopped after the engine had already failed. Renaming the
+  single socket to a recoverable backup failed with the same Windows access error.
+- A targeted reparse-point removal against that exact runtime path also failed with
+  error 1920. No volume, container, image, network or database path was targeted.
+- The local `EnableDockerAI` setting was backed up, temporarily disabled and Docker
+  Desktop restarted. The backend still initialized the inference manager and
+  failed at the same socket. The setting was restored to its original value and
+  the temporary settings backup was removed.
+
+The daemon therefore never became available. The existence and state of
+`fft-rag-demo-local`, `fft_rag_demo_data`, `fft-rag-demo-net` and the relevant
+image remain **UNVERIFIED**; they were not inferred to be missing. No database was
+started or connected to, and no application record, credential, Gemini service,
+evaluator, account or fixture was accessed. The repository still has no private
+provisioning definition from which the service could safely be recreated.
+
+**Exact blocker:** an inaccessible stale Docker runtime reparse point prevents
+Docker Desktop from starting its WSL engine, so the original isolated RAG resources
+cannot be enumerated. **Single smallest next action:** perform a controlled Windows
+reboot, then start Docker Desktop and repeat only the read-only inventory. If error
+1920 survives the reboot, stop and use Docker/Windows support to repair that exact
+runtime entry; do not factory-reset Docker, prune resources, delete volumes or
+recreate the RAG service.
+
 ## 22 October 2026 isolated-environment restoration attempt
 
 This bounded task started from clean, synchronized published `main` at
